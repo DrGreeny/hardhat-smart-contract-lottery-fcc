@@ -23,7 +23,8 @@ module.exports = {
             chainId: 5,
             blockConfirmations: 6,
             url: GOERLI_RPC_URL,
-            accounts: [PRIVATE_KEY],
+            accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
+            saveDeployments: true,
         },
     },
     solidity: {
@@ -48,5 +49,8 @@ module.exports = {
     },
     mocha: {
         timeout: 200000, // 200 seconds max
+    },
+    etherscan: {
+        apiKey: ETHERSCAN_API_KEY,
     },
 }

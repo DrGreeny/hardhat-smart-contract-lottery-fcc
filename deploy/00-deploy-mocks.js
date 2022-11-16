@@ -8,17 +8,19 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
     const chainId = network.config.chainId
+
     if (developmentChains.includes(network.name)) {
         log("Local network detected! Deploying mocks...")
         //deploy a mock vrfcoordinator - from chainlink github mocks
+
+        await deploy("VRFCoordinatorV2Mock", {
+            from: deployer,
+            log: true,
+            args: [BASE_FEE, GAS_PRICE_LINK],
+        })
+        log("Mocks Deployed!")
+        log("------------------------------------------------------------")
     }
-    await deploy("VRFCoordinatorV2Mock", {
-        from: deployer,
-        log: true,
-        args: [BASE_FEE, GAS_PRICE_LINK],
-    })
-    log("Mocks Deployed!")
-    log("------------------------------------------------------------")
 }
 
 module.exports.tags = ["all", "mocks"]
